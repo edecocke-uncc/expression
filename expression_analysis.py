@@ -5,7 +5,7 @@
 # ID: 801442694
 
 """
-gene_expression_analysis.py
+expression_analysis.py
 
 A dramatic bioinformatics adventure in which five brave genes
 battle it out across three tissue samples to claim the throne
@@ -102,7 +102,7 @@ class TheGeneThrone:
 
         Fold-change = Brain / Liver (a classic bioinformatics move).
         """
-        self.df['FoldChange_Brain_vs_Liver'] = (
+        self.df['Fold_Change_Brain_vs_Liver'] = (
             self.df['Brain'] / self.df['Liver']
         ).round(3)
 
@@ -158,7 +158,7 @@ def deliver_the_wisdom_of_the_ancients() -> None:
 
 
 if __name__ == "__main__":
-    # ── Raw expression data ──────────────────────────────────────────────
+
     expression_data = {
         'Heart': [5.2, 3.3, 7.1, 4.5, 2.8],
         'Liver': [4.8, 2.9, 6.5, 4.1, 2.5],
@@ -171,6 +171,6 @@ if __name__ == "__main__":
     throne.crown_the_mean()
     throne.declare_brain_champion()
     throne.calculate_the_dramatic_fold_change()
-    throne.export_to_csv("gene_expression.csv")
+    throne.export_to_csv("expression.csv")
     deliver_the_wisdom_of_the_ancients()
-    print("\n Your genes have been judged.\n")
+    print("\n Your genes have been judged!\n")
