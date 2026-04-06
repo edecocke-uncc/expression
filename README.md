@@ -2,15 +2,25 @@
 
 An exercise using python that looks at using Pandas series and dataframe objects using gene expression data across three tissue samples.
 
-## Setup
 
+### Setup
+
+1. Clone the repository:
 ```bash
-conda env create -f environment.yml
+git clone https://github.com/edecocke-uncc/expression.git
+```
+
+2. Go into the project folder:
+```bash
+cd expression
+```
+
+4. Activate the environment:
+```bash
 conda activate expression
 ```
 
 ## Run
-
 ```bash
 python gene_expression_analysis.py
 ```
