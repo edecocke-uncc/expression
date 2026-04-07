@@ -16,37 +16,47 @@ import pandas as pd
 
 class TheGeneThrone:
     """
-    Holds gene expression data across tissue samples and performs
-    analyses.
+    Stores gene expression data across tissue samples and provides
+    methods for statistical analysis and export.
 
-    Each column in the underlying DataFrame is a Pandas Series —
-    one-dimensional labeled arrays that together form the two-dimensional
-    DataFrame table.
+    Each column in the underlying DataFrame is a Pandas Series 
+    a one-dimensional labeled array. Together, the Series columns
+    form the two-dimensional DataFrame structure.
     """
 
     def __init__(self, data: dict, genes: list):
         """
-        Initialises with raw expression data.
+        Initialises the expression DataFrame from raw input data.
 
         Parameters
         ----------
-        data  : dict  – tissue names → list of expression values
-        genes : list  – gene names used as the DataFrame index
+        data  : dict – tissue names mapped to lists of expression values.
+        genes : list – gene names used as the DataFrame row index.
+
+        Ensures
+        -------
+        self.df is a valid pandas DataFrame with genes as the index
+        and tissues as column labels.
         """
         self.df = pd.DataFrame(data, index=genes)
 
     def show_off_a_series(self, tissue: str) -> pd.Series:
         """
-        Extract a single tissue column and prove that yes, each
-        DataFrame column really is just a humble Pandas Series.
+        Extracts a single tissue column from the DataFrame as a Series
+        and prints its values, type, and dtype.
 
         Parameters
         ----------
-        tissue : str – name of the tissue column to extract
+        tissue : str – the name of the tissue column to extract.
+
+        Ensures
+        -------
+        The extracted object is a pandas Series, demonstrating that
+        each DataFrame column is a one-dimensional labeled array.
 
         Returns
         -------
-        pd.Series
+        pd.Series – the expression values for the specified tissue.
         """
         series = self.df[tissue]
         print(f"\n{'-'*60}")
@@ -58,7 +68,19 @@ class TheGeneThrone:
         return series
 
     def show_off_the_dataframe(self) -> None:
-        """Print the full two-dimensional DataFrame in all its glory."""
+        """
+        Prints the full two-dimensional DataFrame along with its
+        shape and type information.
+
+        Ensures
+        -------
+        Output includes all genes and tissue columns currently
+        stored in self.df, as well as the (rows x columns) dimensions.
+
+        Returns
+        -------
+        None
+        """
         print(f"\n{'-'*60}")
         print("Full Dataframe")
         print(f"{'-'*60}")
@@ -69,8 +91,18 @@ class TheGeneThrone:
 
     def crown_the_mean(self) -> None:
         """
-        Calculate the mean expression per gene across all tissues
-        and add it as a new 'Mean' column.
+        Computes the mean expression per gene across all three tissue
+        columns and appends the result as a new 'Mean' column.
+
+        Ensures
+        -------
+        self.df is modified in place to include a 'Mean' column.
+        Values are rounded to two decimal places.
+        Averaging is performed across columns (axis=1), not across rows.
+
+        Returns
+        -------
+        None
         """
         # axis=1 means we average across columns (tissues) for each gene row
         self.df['Mean'] = self.df[['Heart', 'Liver', 'Brain']].mean(axis=1).round(2)
@@ -81,11 +113,17 @@ class TheGeneThrone:
 
     def declare_brain_champion(self) -> str:
         """
-        Find and announce the most highly expressed gene in the Brain.
+        Identifies the gene with the highest expression level in the
+        Brain tissue column and prints its name and expression value.
+
+        Ensures
+        -------
+        The gene returned corresponds to the maximum value in the
+        'Brain' column of self.df.
 
         Returns
         -------
-        str – name of the winning gene
+        str – the gene name (index label) with the highest Brain expression.
         """
         champion = self.df['Brain'].idxmax()
         print(f"  Most expressed gene in the brain: {champion}")
@@ -94,10 +132,21 @@ class TheGeneThrone:
 
     def calculate_the_dramatic_fold_change(self) -> None:
         """
-        Calculate the fold-change between Brain and Liver expression
-        for each gene and add it as a 'Fold_Change_Brain_vs_Liver' column.
+        Computes the fold-change between Brain and Liver expression
+        for each gene and appends the result as a new column.
 
-        Fold-change = Brain / Liver
+        Fold-change is defined as Brain / Liver and represents
+        the relative difference in expression between the two tissues.
+
+        Ensures
+        -------
+        self.df is modified in place to include a
+        'FoldChange_Brain_vs_Liver' column.
+        Values are rounded to three decimal places.
+
+        Returns
+        -------
+        None
         """
         self.df['FoldChange_Brain_vs_Liver'] = (
             self.df['Brain'] / self.df['Liver']
@@ -110,20 +159,29 @@ class TheGeneThrone:
 
     def export_to_csv(self, filename: str = "gene_expression.csv") -> None:
         """
-        Export the completed DataFrame to a CSV file for further analysis
-        (e.g., clustering, plotting, impressing your PI :)) )
+        Exports the completed DataFrame to a CSV file.
 
         Parameters
         ----------
-        filename : str – output file path (default: gene_expression.csv)
+        filename : str – the output file path. Defaults to
+                         'gene_expression.csv' in the current directory.
+
+        Ensures
+        -------
+        The CSV file is written with the gene index included as the
+        first column. All columns present in self.df at the time of
+        the call are exported.
+
+        Returns
+        -------
+        None
         """
         self.df.to_csv(filename)
         print(f"\n Results saved to '{filename}'")
 
 def deliver_the_wisdom_of_the_ancients() -> None:
     """
-    Print answers to the three reflection questions.
-    No genomics deity was harmed in the making of this function.
+    Prints answers to the three reflection questions posed in the exercise. 
     """
     reflections = {
         "1. What happens if one tissue has missing data for some genes?": (
