@@ -50,7 +50,7 @@ class TheGeneThrone:
         """
         series = self.df[tissue]
         print(f"\n{'-'*60}")
-        print(f"  🧬  BEHOLD!  A lone Series: '{tissue}' expression")
+        print(f" A Series example: {tissue} expression")
         print(f"{'-'*60}")
         print(series)
         print(f"\nType: {type(series)}")
@@ -60,7 +60,7 @@ class TheGeneThrone:
     def show_off_the_dataframe(self) -> None:
         """Print the full two-dimensional DataFrame in all its glory."""
         print(f"\n{'-'*60}")
-        print("THE FULL DATAFRAME  (a kingdom of Series columns)")
+        print("Full Dataframe")
         print(f"{'-'*60}")
         print(self.df)
         print(f"\nShape : {self.df.shape}  (rows × columns)")
@@ -74,9 +74,9 @@ class TheGeneThrone:
         """
         # axis=1 means we average across columns (tissues) for each gene row
         self.df['Mean'] = self.df[['Heart', 'Liver', 'Brain']].mean(axis=1).round(2)
-        print(f"\n{'='*60}")
+        print(f"\n{'-'*60}")
         print("Mean expression per gene (across all tissue types)")
-        print(f"{'='*60}")
+        print(f"{'-'*60}")
         print(self.df)
 
     def declare_brain_champion(self) -> str:
@@ -88,21 +88,18 @@ class TheGeneThrone:
         str – name of the winning gene
         """
         champion = self.df['Brain'].idxmax()
-        print(f"\n{'-'*60}")
-        print("BRAIN CHAMPION")
-        print(f"{'-'*60}")
-        print(f"  Most expressed gene in Brain: {champion}")
-        print(f"  Expression level           : {self.df.loc[champion, 'Brain']}")
+        print(f"  Most expressed gene in the brain: {champion}")
+        print(f"  Expression level: {self.df.loc[champion, 'Brain']}")
         return champion
 
     def calculate_the_dramatic_fold_change(self) -> None:
         """
         Calculate the fold-change between Brain and Liver expression
-        for each gene and add it as a 'FoldChange_Brain_vs_Liver' column.
+        for each gene and add it as a 'Fold_Change_Brain_vs_Liver' column.
 
-        Fold-change = Brain / Liver (a classic bioinformatics move).
+        Fold-change = Brain / Liver
         """
-        self.df['Fold_Change_Brain_vs_Liver'] = (
+        self.df['FoldChange_Brain_vs_Liver'] = (
             self.df['Brain'] / self.df['Liver']
         ).round(3)
 
@@ -114,7 +111,7 @@ class TheGeneThrone:
     def export_to_csv(self, filename: str = "gene_expression.csv") -> None:
         """
         Export the completed DataFrame to a CSV file for further analysis
-        (e.g., clustering, plotting, impressing your PI).
+        (e.g., clustering, plotting, impressing your PI :)) )
 
         Parameters
         ----------
@@ -130,22 +127,23 @@ def deliver_the_wisdom_of_the_ancients() -> None:
     """
     reflections = {
         "1. What happens if one tissue has missing data for some genes?": (
-            "Pandas represents missing values as NaN (Not a Number). "
-            "Operations like .mean() skip NaN by default (skipna=True), "
-            "but fold-change calculations involving NaN will also return NaN. "
-            "You can handle this with df.fillna() or df.dropna()."
+            "If a tissue has missing data for some genes, you can handle it during "
+            "the filtering step — for example, using a minimum-expression filter that "
+            "keeps only genes expressed above a threshold in a minimum number of samples. "
+            "The course shows df.isnull().sum() to check for missing values, "
+            "and df.dropna() or df.fillna(0) to remove or replace them."
         ),
         "2. How could you normalize expression values across samples?": (
-            "Common approaches:\n"
-            "  • Min-Max scaling : (val - min) / (max - min)  → values in [0, 1]\n"
-            "  • Z-score         : (val - mean) / std          → mean=0, std=1\n"
-            "  • TPM / RPKM      : standard RNA-seq normalizations\n"
-            "  pandas example    : df_norm = (df - df.min()) / (df.max() - df.min())"
+            "you could use: "
+            "CPM = (raw_count / total_counts_in_sample) * 1,000,000. "
+            "Which corrects for differences in sequencing depth across samples. "
+            "In pandas: cpm = df.divide(df.sum(axis=0), axis='columns') * 1e6. "
+            "For comparing different genes to each other, RPKM or TPM also "
+            "correct for gene length."
         ),
         "3. How could you use df.to_csv() to export results?": (
-            "Simply call df.to_csv('gene_expression.csv').\n"
-            "This writes the DataFrame (including the index) to a CSV file "
-            "that can be opened in Excel, R, or any downstream bioinformatics tool."
+            "Just call df.to_csv('gene_expression.csv').\n"
+            "This writes the dataframe with the index to the CSV file "
         ),
     }
 
@@ -173,4 +171,3 @@ if __name__ == "__main__":
     throne.calculate_the_dramatic_fold_change()
     throne.export_to_csv("gene_expression.csv")
     deliver_the_wisdom_of_the_ancients()
-    print("\n Your genes have been judged!\n")
