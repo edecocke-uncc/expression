@@ -17,16 +17,16 @@ import pandas as pd
 class TheGeneThrone:
     """
     Holds gene expression data across tissue samples and performs
-    the sacred analyses demanded by the bioinformatics overlords.
+    analyses.
 
     Each column in the underlying DataFrame is a Pandas Series —
     one-dimensional labeled arrays that together form the two-dimensional
-    DataFrame table (a.k.a. The Throne Room).
+    DataFrame table.
     """
 
     def __init__(self, data: dict, genes: list):
         """
-        Initialise The Gene Throne with raw expression data.
+        Initialises with raw expression data.
 
         Parameters
         ----------
@@ -49,9 +49,9 @@ class TheGeneThrone:
         pd.Series
         """
         series = self.df[tissue]
-        print(f"\n{'='*55}")
+        print(f"\n{'-'*60}")
         print(f"  🧬  BEHOLD!  A lone Series: '{tissue}' expression")
-        print(f"{'='*55}")
+        print(f"{'-'*60}")
         print(series)
         print(f"\nType: {type(series)}")
         print(f"dtype: {series.dtype}")
@@ -59,9 +59,9 @@ class TheGeneThrone:
 
     def show_off_the_dataframe(self) -> None:
         """Print the full two-dimensional DataFrame in all its glory."""
-        print(f"\n{'='*55}")
-        print("  🏰  THE FULL DATAFRAME  (a kingdom of Series columns)")
-        print(f"{'='*55}")
+        print(f"\n{'-'*60}")
+        print("THE FULL DATAFRAME  (a kingdom of Series columns)")
+        print(f"{'-'*60}")
         print(self.df)
         print(f"\nShape : {self.df.shape}  (rows × columns)")
         print(f"Type  : {type(self.df)}")
@@ -74,9 +74,9 @@ class TheGeneThrone:
         """
         # axis=1 means we average across columns (tissues) for each gene row
         self.df['Mean'] = self.df[['Heart', 'Liver', 'Brain']].mean(axis=1).round(2)
-        print(f"\n{'='*55}")
-        print("  📊  MEAN EXPRESSION per gene (across all tissues)")
-        print(f"{'='*55}")
+        print(f"\n{'='*60}")
+        print("Mean expression per gene (across all tissue types)")
+        print(f"{'='*60}")
         print(self.df)
 
     def declare_brain_champion(self) -> str:
@@ -88,9 +88,9 @@ class TheGeneThrone:
         str – name of the winning gene
         """
         champion = self.df['Brain'].idxmax()
-        print(f"\n{'='*55}")
-        print("  🏆  BRAIN CHAMPION")
-        print(f"{'='*55}")
+        print(f"\n{'-'*60}")
+        print("BRAIN CHAMPION")
+        print(f"{'-'*60}")
         print(f"  Most expressed gene in Brain: {champion}")
         print(f"  Expression level           : {self.df.loc[champion, 'Brain']}")
         return champion
@@ -106,9 +106,9 @@ class TheGeneThrone:
             self.df['Brain'] / self.df['Liver']
         ).round(3)
 
-        print(f"\n{'='*55}")
-        print("  🔬  FOLD-CHANGE: Brain vs Liver")
-        print(f"{'='*55}")
+        print(f"\n{'-'*60}")
+        print(" Fold Change (Brain vs Liver)")
+        print(f"{'-'*60}")
         print(self.df)
 
     def export_to_csv(self, filename: str = "gene_expression.csv") -> None:
@@ -121,7 +121,7 @@ class TheGeneThrone:
         filename : str – output file path (default: gene_expression.csv)
         """
         self.df.to_csv(filename)
-        print(f"\n  💾  Results saved to '{filename}'")
+        print(f"\n Results saved to '{filename}'")
 
 def deliver_the_wisdom_of_the_ancients() -> None:
     """
@@ -149,11 +149,11 @@ def deliver_the_wisdom_of_the_ancients() -> None:
         ),
     }
 
-    print(f"\n{'='*55}")
-    print("  🧠  REFLECTION — Wisdom of the Ancients")
-    print(f"{'='*55}")
+    print(f"\n{'-'*60}")
+    print("Q&A")
+    print(f"{'-'*60}")
     for question, answer in reflections.items():
-        print(f"\n❓ {question}")
+        print(f"\n {question}")
         print(f"   {answer}")
 
 
@@ -171,6 +171,6 @@ if __name__ == "__main__":
     throne.crown_the_mean()
     throne.declare_brain_champion()
     throne.calculate_the_dramatic_fold_change()
-    throne.export_to_csv("expression.csv")
+    throne.export_to_csv("gene_expression.csv")
     deliver_the_wisdom_of_the_ancients()
     print("\n Your genes have been judged!\n")
