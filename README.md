@@ -27,11 +27,11 @@ python3 expression_analysis.py
 
 ## What it does
 
-- Loads expression data for 5 genes (`BRCA1`, `TP53`, `EGFR`, `MYC`, `KRAS`) across `Heart`, `Liver`, and `Brain` samples
+- Loads expression data for 5 genes (BRCA1, TP53, EGFR, MYC, KRAS) across Heart, Liver, and Brain samples
 - Demonstrates the difference between a series and dataframes
 - Calculates mean expression per gene, determines the most highly expressed gene in the brain, and computes Brain vs Liver fold-change
-- Exports results to `expression.csv`
+- Exports results to expression.csv
 
 ## Output
 
-A `expression.csv` file is written to the current directory after each run.
+A expression.csv file is written to the current directory after each run.
