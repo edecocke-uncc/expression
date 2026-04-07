@@ -15,6 +15,11 @@ git clone https://github.com/edecocke-uncc/expression.git
 cd expression
 ```
 
+3. Create the environment:
+```bash
+conda env create -f environment.yml
+```
+
 4. Activate the environment:
 ```bash
 conda activate expression
